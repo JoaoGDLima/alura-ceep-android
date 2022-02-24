@@ -3,6 +3,7 @@ package com.example.ceep.ui.activity;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ceep.R;
@@ -25,7 +26,8 @@ public class ListaNotasActivity extends AppCompatActivity {
         notaDAO.insere(new Nota("Primeira nota", "Primeira descrição"));
 
         List<Nota> todasNotas = notaDAO.todos();
-        listaNotas.setAdapter(new ListaNotasAdapter(todasNotas));
-
+        listaNotas.setAdapter(new ListaNotasAdapter(this, todasNotas));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        listaNotas.setLayoutManager(layoutManager);
     }
 }
