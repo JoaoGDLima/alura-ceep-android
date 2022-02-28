@@ -1,17 +1,18 @@
 package com.example.ceep.ui.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import static com.example.ceep.ui.activity.NotaActivityConstantes.CHAVE_NOTA;
+import static com.example.ceep.ui.activity.NotaActivityConstantes.CODIGO_RESULTADO_NOTA_CRIADA;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.ceep.R;
-import com.example.ceep.dao.NotaDAO;
 import com.example.ceep.model.Nota;
 
 public class FormularioNotaActivity extends AppCompatActivity {
@@ -42,8 +43,8 @@ public class FormularioNotaActivity extends AppCompatActivity {
 
     private void retornaNota(Nota nota) {
         Intent resultadoInsercao = new Intent();
-        resultadoInsercao.putExtra("nota", nota);
-        setResult(2,resultadoInsercao);
+        resultadoInsercao.putExtra(CHAVE_NOTA, nota);
+        setResult(CODIGO_RESULTADO_NOTA_CRIADA,resultadoInsercao);
     }
 
     @NonNull

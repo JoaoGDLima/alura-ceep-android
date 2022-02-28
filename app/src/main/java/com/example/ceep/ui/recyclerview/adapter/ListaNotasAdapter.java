@@ -1,7 +1,6 @@
 package com.example.ceep.ui.recyclerview.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,6 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
 
     private final List<Nota> notas;
     private final Context context;
-    // restante dos atributos
-    private int quantidadeViewHolder = 0;
 
     public ListaNotasAdapter(Context context, List<Nota> notas) {
         this.context = context;
@@ -29,13 +26,8 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
 
     @NonNull
     @Override
-    public ListaNotasAdapter.NotaViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
-        quantidadeViewHolder++;
-
+    public ListaNotasAdapter.NotaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View viewCriada = LayoutInflater.from(context).inflate(R.layout.item_nota, parent, false);
-        Log.i("recyclerView adapter",
-                "quantidade view holder: " + quantidadeViewHolder);
-
         return new NotaViewHolder(viewCriada);
     }
 
@@ -60,7 +52,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
             this.descricao = itemView.findViewById(R.id.item_nota_descricao);
         }
 
-        public void vincula(Nota nota){
+        public void vincula(Nota nota) {
             preencheCampo(nota);
         }
 
@@ -70,7 +62,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         }
     }
 
-    public void adiciona(Nota nota){
+    public void adiciona(Nota nota) {
         this.notas.add(nota);
         this.notifyDataSetChanged();
     }
