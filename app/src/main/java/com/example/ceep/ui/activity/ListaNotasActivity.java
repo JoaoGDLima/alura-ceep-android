@@ -27,6 +27,7 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     private ListaNotasAdapter adapter;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<Intent> activityResultEditLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class ListaNotasActivity extends AppCompatActivity {
 
         configuraReciclerView(todasNotas);
         contiguraActivityResult();
+        contiguraActivityResultEdit();
         configuraBotaoInsereNota();
     }
 
@@ -61,6 +63,18 @@ public class ListaNotasActivity extends AppCompatActivity {
                     if (ehResultadoComNota(result)) {
                         Nota notaRecebida = (Nota) result.getData().getSerializableExtra(CHAVE_NOTA);
                         adiciona(notaRecebida);
+                    }
+                });
+    }
+
+    private void contiguraActivityResultEdit() {
+        activityResultEditLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (ehResultadoComNota(result) && result.getData().hasExtra("posicao")) {
+                        Nota notaRecebida = (Nota) result.getData().getSerializableExtra(CHAVE_NOTA);
+                        int posicaoRecebida = result.getData().getIntExtra("posicao", -1);
+                        new NotaDAO().altera(posicaoRecebida, notaRecebida);
+                        adapter.altera(posicaoRecebida, notaRecebida);
                     }
                 });
     }
@@ -92,8 +106,11 @@ public class ListaNotasActivity extends AppCompatActivity {
         adapter = new ListaNotasAdapter(this, todasNotas);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void OnItemClick(Nota nota) {
-                Toast.makeText(ListaNotasActivity.this, nota.getTitulo(), Toast.LENGTH_SHORT).show();
+            public void OnItemClick(Nota nota, int posicao) {
+                Intent abreFormularioComNota = new Intent(ListaNotasActivity.this, FormularioNotaActivity.class);
+                abreFormularioComNota.putExtra(CHAVE_NOTA, nota);
+                abreFormularioComNota.putExtra("posicao", posicao);
+                activityResultEditLauncher.launch(abreFormularioComNota);
             }
         });
 

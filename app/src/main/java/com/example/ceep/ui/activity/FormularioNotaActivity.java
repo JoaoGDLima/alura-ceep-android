@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +17,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ceep.R;
 import com.example.ceep.model.Nota;
 
+import java.io.Serializable;
+
 public class FormularioNotaActivity extends AppCompatActivity {
+
+    private int posicaoRecebida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_nota);
+
+        Intent dadosRecebidas = getIntent();
+        if (dadosRecebidas.hasExtra(CHAVE_NOTA) && dadosRecebidas.hasExtra("posicao")){
+            Nota notaRecebida = (Nota) dadosRecebidas.getSerializableExtra(CHAVE_NOTA);
+            posicaoRecebida = dadosRecebidas.getIntExtra("posicao", -1);
+            TextView titulo = findViewById(R.id.formulario_nota_titulo);
+            titulo.setText(notaRecebida.getTitulo());
+
+            TextView descricao = findViewById(R.id.formulario_nota_descricao);
+            descricao.setText(notaRecebida.getTitulo());
+        }
     }
 
     @Override
@@ -44,6 +61,7 @@ public class FormularioNotaActivity extends AppCompatActivity {
     private void retornaNota(Nota nota) {
         Intent resultadoInsercao = new Intent();
         resultadoInsercao.putExtra(CHAVE_NOTA, nota);
+        resultadoInsercao.putExtra("posicao", posicaoRecebida);
         setResult(CODIGO_RESULTADO_NOTA_CRIADA,resultadoInsercao);
     }
 
