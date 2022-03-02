@@ -1,7 +1,9 @@
 package com.example.ceep.ui.activity;
 
 import static com.example.ceep.ui.activity.NotaActivityConstantes.CHAVE_NOTA;
+import static com.example.ceep.ui.activity.NotaActivityConstantes.CHAVE_POSICAO;
 import static com.example.ceep.ui.activity.NotaActivityConstantes.CODIGO_RESULTADO_NOTA_CRIADA;
+import static com.example.ceep.ui.activity.NotaActivityConstantes.POSICAO_INVALIDA;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +20,6 @@ import com.example.ceep.model.Nota;
 
 public class FormularioNotaActivity extends AppCompatActivity {
 
-    public static final int POSICAO_INVALIDA = -1;
-    public static final String CHAVE_POSICAO = "posicao";
     private int posicaoRecebida = POSICAO_INVALIDA;
     private EditText titulo;
     private EditText descricao;
@@ -40,7 +40,7 @@ public class FormularioNotaActivity extends AppCompatActivity {
 
     private void preencheCampos(Nota notaRecebida) {
         titulo.setText(notaRecebida.getTitulo());
-        descricao.setText(notaRecebida.getTitulo());
+        descricao.setText(notaRecebida.getDescricao());
     }
 
     private void inicializaCampos() {
