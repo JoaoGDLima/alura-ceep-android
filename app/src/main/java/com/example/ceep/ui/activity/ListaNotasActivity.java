@@ -2,9 +2,9 @@ package com.example.ceep.ui.activity;
 
 import static com.example.ceep.ui.activity.NotaActivityConstantes.CHAVE_NOTA;
 import static com.example.ceep.ui.activity.NotaActivityConstantes.CHAVE_POSICAO;
-import static com.example.ceep.ui.activity.NotaActivityConstantes.CODIGO_RESULTADO_NOTA_CRIADA;
 import static com.example.ceep.ui.activity.NotaActivityConstantes.POSICAO_INVALIDA;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -100,15 +100,15 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     private boolean ehResultadoInsereNota(ActivityResult result) {
-        return ehCodigoResultadoNotaCriada(result) && result.getData().hasExtra(CHAVE_NOTA);
+        return resultadoOK(result) && result.getData().hasExtra(CHAVE_NOTA);
     }
 
     private boolean ehResultadoAlteraNota(ActivityResult result) {
-        return ehCodigoResultadoNotaCriada(result) && result.getData().hasExtra(CHAVE_NOTA) && result.getData().hasExtra(CHAVE_POSICAO);
+        return resultadoOK(result) && result.getData().hasExtra(CHAVE_NOTA) && result.getData().hasExtra(CHAVE_POSICAO);
     }
 
-    private boolean ehCodigoResultadoNotaCriada(ActivityResult result) {
-        return result.getResultCode() == CODIGO_RESULTADO_NOTA_CRIADA;
+    private boolean resultadoOK(ActivityResult result) {
+        return result.getResultCode() == Activity.RESULT_OK;
     }
 
     private List<Nota> pegaTodasNotas() {
