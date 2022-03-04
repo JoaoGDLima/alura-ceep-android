@@ -19,6 +19,8 @@ import com.example.ceep.model.Nota;
 
 public class FormularioNotaActivity extends AppCompatActivity {
 
+    public static final String TITULO_APP_BAR_INSERE = "Insere nota";
+    public static final String TITULO_APP_BAR_ALTERA = "Altera nota";
     private int posicaoRecebida = POSICAO_INVALIDA;
     private EditText titulo;
     private EditText descricao;
@@ -28,9 +30,10 @@ public class FormularioNotaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_nota);
         inicializaCampos();
-
+        setTitle(TITULO_APP_BAR_INSERE);
         Intent dadosRecebidas = getIntent();
         if (dadosRecebidas.hasExtra(CHAVE_NOTA)){
+            setTitle(TITULO_APP_BAR_ALTERA);
             Nota notaRecebida = (Nota) dadosRecebidas.getSerializableExtra(CHAVE_NOTA);
             posicaoRecebida = dadosRecebidas.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
             preencheCampos(notaRecebida);
