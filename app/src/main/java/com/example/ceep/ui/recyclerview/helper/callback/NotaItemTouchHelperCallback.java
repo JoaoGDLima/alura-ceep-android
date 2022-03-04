@@ -1,6 +1,5 @@
 package com.example.ceep.ui.recyclerview.helper.callback;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,18 +16,23 @@ public class NotaItemTouchHelperCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+    public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         int marcacoesDeDeslize = ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT;
-        return makeMovementFlags(0, marcacoesDeDeslize);
+        int marcacoesDeArrastar = ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.RIGHT |  ItemTouchHelper.LEFT;
+        return makeMovementFlags(marcacoesDeArrastar, marcacoesDeDeslize);
     }
 
     @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-        return false;
+    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+        int posicaoInicial = viewHolder.getAdapterPosition();
+        int posicaoFinal = target.getAdapterPosition();
+        new NotaDAO().troca(posicaoInicial, posicaoFinal);
+        adapter.troca(posicaoInicial, posicaoFinal);
+        return true;
     }
 
     @Override
-    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         int posicaoDaNotaDeslizada = viewHolder.getAdapterPosition();
         new NotaDAO().remove(posicaoDaNotaDeslizada);
         adapter.remove(posicaoDaNotaDeslizada);
